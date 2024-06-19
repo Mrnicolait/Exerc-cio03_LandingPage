@@ -1,0 +1,377 @@
+/* styles*/
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: black;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px;
+}
+
+header .logo {
+    height: 100px;
+    margin-right: 20px;
+}
+
+header .header-content {
+    
+    text-align: center;
+}
+
+header h1 {
+    margin: 0;
+    font-size: 2.5em;
+}
+
+header .slogan {
+    margin: 10px 0 0;
+    font-size: 1.2em;
+    font-style: italic;
+}
+header .header-buttons {
+    display: inline-block; 
+    margin-right: 10px; 
+}
+
+.cta-button {
+    background-color: #0095DF;
+    color: white;
+    border: none;
+    padding: 3px 6px;
+    font-size: 1.2em;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.cta-button:hover {
+    background-color: #3db5f1;
+}
+
+
+/* Paralax */
+
+.bgimage {
+    height: 70vh;
+    position: relative;
+    background: url("img/escudo.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-attachment: fixed;
+    }
+
+/* Sobre */
+.sobre {
+    overflow: hidden;
+    text-align: center;
+    color: #0095DF;
+    text-align: center;
+}
+
+
+.foto-legenda {
+    display: inline-block;
+    position: relative;
+    border: 8px solid white;
+    box-shadow: 1px 1px 4px black;
+    width: 45%; 
+    height: auto; 
+    margin: 0 10px; 
+    vertical-align: top;
+    box-sizing: border-box;
+}
+
+.foto-legenda img {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.foto-legenda figcaption {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    background-color: rgba(0, 0, 0, 0.4);
+    color: white;
+    font-size: 24px;
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    transition: opacity 1s;
+}
+
+.foto-legenda:hover figcaption {
+    opacity: 1;
+}
+
+/* Renato */
+.Renato {
+    text-align: center;
+    margin: 20px;
+    padding: 20px;
+    background-color: #f5f5f5;
+    border-radius: 10px;
+}
+
+.Renato h2 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.Renato p {
+    font-size: 1em;
+    color: #666;
+    margin-top: 20px;
+}
+
+.foto-legenda2 {
+    display: inline-block;
+    margin: 10px;
+    text-align: center;
+}
+
+.foto-legenda2 img {
+    max-width: 200px;
+    height: auto;
+    border-radius: 10px;
+}
+
+.foto-legenda2 figcaption {
+    font-size: 0.9em;
+    color: #555;
+    margin-top: 5px;
+}
+
+/* Galeria */
+section#galeria {
+    padding: 0 30px 0 30px;
+    color: #0095DF;
+}
+ 
+
+#galeria img:hover {
+    cursor: pointer;
+    opacity: 0.8;
+       
+}
+
+/* Estilos para o modal */
+.modal {
+    display: none; 
+    position: fixed; 
+    z-index: 1; 
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; 
+    background-color: rgba(0, 0, 0, 0.9);
+    }
+
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+   max-width: 700px;
+    }
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    }
+        
+/* Mapa/Contato */
+.text-center {
+    text-align: center;
+    }
+.mt-4 {
+    margin-top: 1.5rem;
+    }
+/* Estilos para o layout */
+#contato {
+    display: table;
+    width: 100%;
+    }
+ #contato .row {
+    display: table-row;
+        }
+#contato .column {
+    display: table-cell;
+    padding: 10px;
+    vertical-align: top;
+    }
+    
+.container {
+        position: relative;
+    }
+    
+.mascote {
+        position: absolute;
+        width: 200px; 
+        height: auto;
+    }
+    
+.mascote-esquerdo {
+        top: 40%;
+        left: -220px; 
+        transform: translateY(-50%);
+    }
+    
+.mascote-direito {
+        top: 40%;
+        right: -220px; 
+        transform: translateY(-50%);
+    }
+    
+.column {
+        position: relative;
+    }
+    
+.cardBody {
+        margin-bottom: 20px;
+    }
+ 
+/* Seja socio CSS */
+.associacao .container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+.associacao .formulario {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px; /* Ou a largura desejada */
+    margin: 0 auto; /* Centraliza horizontalmente */
+    text-align: center;
+}
+.associacao .formulario label {
+    display: block;
+    margin-top: 10px;
+    font-weight: bold;
+}
+
+.associacao .formulario input, .associacao .formulario textarea {
+    display: block;
+    width: calc(100% - 22px);
+    margin-top: 5px;
+    padding: 10px;
+    font-size: 1em;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.associacao .formulario button {
+    display: block;
+    width: 100%;
+    margin-top: 10px;
+    background-color: #0095DF;
+    color: white;
+    border: none;
+    padding: 10px 10px;
+    font-size: 1.2em;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.associacao .formulario button:hover {
+    background-color: #53b8eb;
+}
+
+.associacao #agradecimento {
+    text-align: center;
+    padding: 3px;
+    background-color: #e0ffe0;
+    border: 1px solid #0095DF;
+    border-radius: 5px;
+    width: 300px;
+    margin: 0; 
+}
+
+/* Loja CSS */
+.container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.logo {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    margin-bottom: 20px;
+    font-size: 24px;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+button {
+    width: 100%;
+    padding: 10px;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#resultado {
+    margin-top: 20px;
+    font-size: 16px;
+    color: blue;
+}
+
+#listaMercadorias {
+    margin-top: 20px;
+}
+
+/* footer CSS */
+footer {
+    background-color: #0095DF;
+    color: white;
+    text-align: center;
+    padding: 10px 0;
+    width: 100%;
+    
+}
