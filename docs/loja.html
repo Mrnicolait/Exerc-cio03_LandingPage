@@ -5,102 +5,132 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Loja do Grêmio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
-
-    <body class="loja">
-        <header>
-            <img src="img/Gremio_logo.svg.png" alt="Gremio_logo" class="logo">
-            <div class="header-content">
-                <h1>Loja do Grêmio</h1>
-            </div>
-            <div class="header-buttons">
-                <button class="cta-button" onclick="redirectToHome()">Início</button>
-            </div>
-        </header>
-        <div class="container">
-            <img src="img/Gremio_logo.svg.png" alt="Logo do Grêmio" class="logo">
-            <div id="cadastroView">
-                <h1>Loja do Grêmio</h1>
-                <form id="cadastroForm">
-                    <label for="nome">Itens Esportivo:</label>
-                    <input type="text" id="nome" name="nome" required>
-    
-                    <label for="quantidade">Quantidade:</label>
-                    <input type="number" id="quantidade" name="quantidade" required>
-    
-                    <label for="preco">Preço:</label>
-                    <input type="number" id="preco" name="preco" step="0.01" required>
-    
-                    <button type="submit">Cadastrar</button>
-                </form>
-                <div id="resultado"></div>
-                <button id="consultarBtn">Consultar Mercadorias</button>
-            </div>
-    
-            <div id="consultaView" style="display: none;">
-                <h1>Consulta de Mercadorias</h1>
-                <div id="listaMercadorias"></div>
-                <button id="voltarBtn">Voltar ao Cadastro</button>
-            </div>
+<body class="loja">
+    <header>
+        <img src="img/Gremio_logo.svg.png" alt="Gremio_logo" class="logo">
+        <div class="header-content">
+            <h1>Loja do Grêmio</h1>
         </div>
-        
+        <div class="header-buttons">
+            <button class="cta-button" onclick="redirectToHome()">Início</button>
+        </div>
+    </header>
+    <div class="section-container" id="cadastroView">
+        <div class="section-logo">
+            <img src="img/Gremio_logo.svg.png" alt="Logo do Grêmio" class="logo">
+        </div>
+        <div class="section-form">
+            <h1>Cadastro de Mercadorias</h1>
+            <form id="cadastroForm">
+                <label for="nome">Item Esportivo:</label>
+                <input type="text" id="nome" name="nome" required>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" name="quantidade" required>
+                <label for="preco">Preço:</label>
+                <input type="number" id="preco" name="preco" step="0.01" required>
+                <button type="submit">Cadastrar</button>
+            </form>
+            <div id="resultado"></div>
+            <button id="consultarBtn">Consultar Mercadorias</button>
+        </div>
+    </div>
+    <div id="consultaView" class="section-container" style="display: none;">
+        <h1>Consulta de Mercadorias</h1>
+        <div id="listaMercadorias"></div>
+        <button id="voltarBtn">Voltar ao Cadastro</button>
+    </div>
     <footer class="footer">
         <p>&copy; 2024 Projeto Grêmio. Developed by Marcelo Nicolait.</p>
     </footer>
-    
     <script>
-       
-    let mercadorias = [];
+        document.addEventListener('DOMContentLoaded', function() {
+            const form = document.getElementById('cadastroForm');
+            const resultado = document.getElementById('resultado');
+            const listaMercadorias = document.getElementById('listaMercadorias');
+            const cadastroView = document.getElementById('cadastroView');
+            const consultaView = document.getElementById('consultaView');
 
-    document.getElementById('cadastroForm').addEventListener('submit', function(event) {
-        event.preventDefault();
+            form.addEventListener('submit', function(event) {
+                event.preventDefault();
+                const nome = document.getElementById('nome').value;
+                const quantidade = document.getElementById('quantidade').value;
+                const preco = document.getElementById('preco').value;
 
-        const nome = document.getElementById('nome').value;
-        const quantidade = document.getElementById('quantidade').value;
-        const preco = document.getElementById('preco').value;
+                const mercadoria = { nome, quantidade, preco };
+                saveMercadoria(mercadoria);
 
-        const mercadoria = {
-            nome,
-            quantidade,
-            preco
-        };
-
-        mercadorias.push(mercadoria);
-
-        document.getElementById('resultado').innerText = `Mercadoria cadastrada com sucesso:
-        Loja: ${nome}, Quantidade: ${quantidade}, Preço: R$${preco}`;
-
-        document.getElementById('cadastroForm').reset();
-    });
-
-    document.getElementById('consultarBtn').addEventListener('click', function() {
-        document.getElementById('cadastroView').style.display = 'none';
-        document.getElementById('consultaView').style.display = 'block';
-
-        const listaMercadorias = document.getElementById('listaMercadorias');
-        listaMercadorias.innerHTML = '';
-
-        if (mercadorias.length === 0) {
-            listaMercadorias.innerText = 'Nenhuma mercadoria cadastrada.';
-        } else {
-            const ul = document.createElement('ul');
-            mercadorias.forEach(mercadoria => {
-                const li = document.createElement('li');
-                li.innerText = `Loja: ${mercadoria.nome}, Quantidade: ${mercadoria.quantidade}, Preço: R$${mercadoria.preco}`;
-                ul.appendChild(li);
+                form.reset();
+                resultado.innerText = `Mercadoria cadastrada com sucesso: Item: ${nome}, Quantidade: ${quantidade}, Preço: R$${preco}`;
             });
-            listaMercadorias.appendChild(ul);
+
+            document.getElementById('consultarBtn').addEventListener('click', function() {
+                cadastroView.style.display = 'none';
+                consultaView.style.display = 'block';
+                renderMercadorias();
+            });
+
+            document.getElementById('voltarBtn').addEventListener('click', function() {
+                consultaView.style.display = 'none';
+                cadastroView.style.display = 'flex';
+            });
+
+            function saveMercadoria(mercadoria) {
+                let mercadorias = JSON.parse(localStorage.getItem('mercadorias')) || [];
+                mercadorias.push(mercadoria);
+                localStorage.setItem('mercadorias', JSON.stringify(mercadorias));
+            }
+
+            function renderMercadorias() {
+                let mercadorias = JSON.parse(localStorage.getItem('mercadorias')) || [];
+                listaMercadorias.innerHTML = '';
+                if (mercadorias.length === 0) {
+                    listaMercadorias.innerText = 'Nenhuma mercadoria cadastrada.';
+                } else {
+                    const ul = document.createElement('ul');
+                    mercadorias.forEach((mercadoria, index) => {
+                        const li = document.createElement('li');
+                        li.innerHTML = `
+                            Item: ${mercadoria.nome}, Quantidade: ${mercadoria.quantidade}, Preço: R$${mercadoria.preco}
+                            <div class="action-buttons">
+                                <i class="fas fa-edit" title="Editar" onclick="editMercadoria(${index})"></i>
+                                <i class="fas fa-trash" title="Excluir" onclick="deleteMercadoria(${index})"></i>
+                            </div>
+                        `;
+                        ul.appendChild(li);
+                    });
+                    listaMercadorias.appendChild(ul);
+                }
+            }
+
+            window.editMercadoria = function(index) {
+                let mercadorias = JSON.parse(localStorage.getItem('mercadorias')) || [];
+                const mercadoria = mercadorias[index];
+                document.getElementById('nome').value = mercadoria.nome;
+                document.getElementById('quantidade').value = mercadoria.quantidade;
+                document.getElementById('preco').value = mercadoria.preco;
+
+                mercadorias.splice(index, 1);
+                localStorage.setItem('mercadorias', JSON.stringify(mercadorias));
+                cadastroView.style.display = 'flex';
+                consultaView.style.display = 'none';
+            }
+
+            window.deleteMercadoria = function(index) {
+                let mercadorias = JSON.parse(localStorage.getItem('mercadorias')) || [];
+                mercadorias.splice(index, 1);
+                localStorage.setItem('mercadorias', JSON.stringify(mercadorias));
+                renderMercadorias();
+            }
+
+            // Renderizar mercadorias ao carregar a página
+            renderMercadorias();
+        });
+
+        function redirectToHome() {
+            window.location.href = "index.html"; 
         }
-    });
-
-    document.getElementById('voltarBtn').addEventListener('click', function() {
-        document.getElementById('consultaView').style.display = 'none';
-        document.getElementById('cadastroView').style.display = 'block';
-    });
-    function redirectToHome() {
-    window.location.href = "index.html"; 
-}
-
     </script>
 </body>
 </html>

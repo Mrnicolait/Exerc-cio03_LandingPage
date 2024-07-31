@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Seja Sócio - Projeto Grêmio</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <header>
@@ -17,45 +18,118 @@
         </div>
     </header>
     <main>
-        <section class="associacao container">
-            <img src="img/Gremio_logo.svg.png" alt="Logo do Grêmio" class="logo">
-            <h2>Formulário de Associação</h2>
-             <form id="membership-form" class="formulario">
-                <!-- Campos do formulário -->
-                <label for="nome">Nome:</label>
-                <input type="text" id="nome" name="nome" required>
-                
-                <label for="cidade">Cidade:</label>
-                <input type="text" id="cidade" name="cidade" required>
-                
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required>
-                
-                <button type="submit">Finalizar</button>
-             </form>
-            <div id="agradecimento" style="display: none;">
-                <h3>Obrigado por se associar!</h3>
-                <p>Recebemos seus dados e em breve entraremos em contato.</p>
+        <section class="section-container">
+            <div class="section-logo">
+                <img src="img/Gremio_logo.svg.png" alt="Logo do Grêmio" class="logo">
+            </div>
+            <div class="section-form">
+                <h2>Formulário de Associação</h2>
+                <form id="membership-form" class="formulario">
+                    <label for="nome">Nome:</label>
+                    <input type="text" id="nome" name="nome" required>
+                    <label for="cidade">Cidade:</label>
+                    <input type="text" id="cidade" name="cidade" required>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <button type="submit">Finalizar</button>
+                </form>
+                <div id="agradecimento" style="display: none;">
+                    <h3>Obrigado por se associar!</h3>
+                    <p>Recebemos seus dados e em breve entraremos em contato.</p>
+                </div>
+            </div>
+            <div class="section-history">
+                <h2>Associados Cadastrados</h2>
+                <ul id="associados-list"></ul>
             </div>
         </section>
     </main>
-    <footer>
+    <footer class="footer">
         <p>&copy; 2024 Projeto Grêmio. Developed by Marcelo Nicolait.</p>
     </footer>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('membership-form');
             const agradecimento = document.getElementById('agradecimento');
+            const associadosList = document.getElementById('associados-list');
 
             form.addEventListener('submit', function(event) {
                 event.preventDefault();
+                const nome = document.getElementById('nome').value;
+                const cidade = document.getElementById('cidade').value;
+                const email = document.getElementById('email').value;
+
+                // Cria um novo associado e salva no localStorage
+                const associado = { nome, cidade, email };
+                saveAssociado(associado);
+
+                form.reset();
                 form.style.display = 'none';
                 agradecimento.style.display = 'block';
+                renderAssociados();
             });
+
+            function saveAssociado(associado) {
+                let associados = JSON.parse(localStorage.getItem('associados')) || [];
+                associados.push(associado);
+                localStorage.setItem('associados', JSON.stringify(associados));
+            }
+
+            function renderAssociados() {
+                let associados = JSON.parse(localStorage.getItem('associados')) || [];
+                associadosList.innerHTML = '';
+                associados.forEach((associado, index) => {
+                    const li = document.createElement('li');
+                    li.textContent = `${associado.nome} - ${associado.cidade} - ${associado.email}`;
+                    
+                    const editBtn = document.createElement('i');
+                    editBtn.className = 'fas fa-edit';
+                    editBtn.title = 'Editar';
+                    editBtn.addEventListener('click', () => editAssociado(index));
+                    
+                    const deleteBtn = document.createElement('i');
+                    deleteBtn.className = 'fas fa-trash';
+                    deleteBtn.title = 'Excluir';
+                    deleteBtn.addEventListener('click', () => deleteAssociado(index));
+                    
+                    li.appendChild(editBtn);
+                    li.appendChild(deleteBtn);
+                    associadosList.appendChild(li);
+                });
+            }
+
+            function editAssociado(index) {
+                let associados = JSON.parse(localStorage.getItem('associados')) || [];
+                const associado = associados[index];
+                document.getElementById('nome').value = associado.nome;
+                document.getElementById('cidade').value = associado.cidade;
+                document.getElementById('email').value = associado.email;
+
+                // Remover o associado existente
+                associados.splice(index, 1);
+                localStorage.setItem('associados', JSON.stringify(associados));
+
+                form.style.display = 'block';
+                agradecimento.style.display = 'none';
+            }
+
+            function deleteAssociado(index) {
+                let associados = JSON.parse(localStorage.getItem('associados')) || [];
+                associados.splice(index, 1);
+                localStorage.setItem('associados', JSON.stringify(associados));
+                renderAssociados();
+            }
+
+            // Renderizar associados ao carregar a página
+            renderAssociados();
         });
+
         function redirectToHome() {
-    window.location.href = "index.html"; 
-}
+            window.location.href = "index.html"; 
+        }
     </script>
 </body>
 </html>
+
+
+
