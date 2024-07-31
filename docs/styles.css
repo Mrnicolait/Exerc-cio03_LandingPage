@@ -85,7 +85,7 @@ main {
     padding: 5px;
 }
 .bgimage {
-    background-image: url('/docs/img/escudo.jpg'); 
+    background-image: url('img/escudo.jpg'); 
     height: 70vh;
     background-attachment: fixed;
     background-position: center;
